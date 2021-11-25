@@ -1,6 +1,4 @@
-
 import React from 'react'
-
 import { useCustomDispatch, useCustomSelector } from '../../../../hooks/store'
 import { fetchCurrentWeatherSeven } from '../../../../store/thunk/fetchCurrentWeather'
 import { getNextSevenDate, getNextSevenDays, getNextSevenMonth } from '../../../../Utils/dateUtils'
@@ -14,6 +12,7 @@ const Days = () => {
     const days = getNextSevenDays()
     const montn = getNextSevenMonth()
     const dispatch = useCustomDispatch()
+    
     const weatherSevenDays = useCustomSelector(state => state.currentWeatherSevenSlice.data?.daily)?.slice(0, 7)
     const isLoading = useCustomSelector(state => state.currentWeatherSevenSlice.isLoading)
 

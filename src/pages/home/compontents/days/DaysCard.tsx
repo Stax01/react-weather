@@ -1,4 +1,5 @@
-import { lowerCase } from 'lodash'
+
+import * as _ from 'lodash'
 import React from 'react'
 import { GlobalSvgSelector } from '../../../../assets/icon/global/globalSvgSelector'
 import Popup from '../../../../components/popup/Popup'
@@ -7,7 +8,7 @@ import s from './days.module.scss'
 
 
 const DaysCard = (data: WeatherDaily) => {
-    const main = lowerCase(data.weather[0].main)
+    const main = _.lowerCase(data.weather[0].main)
     const [modal, setModal] = React.useState(false)
 
     return (
