@@ -1,0 +1,74 @@
+@import "./../../styles/variables.scss";
+
+.modal {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.popup {
+  position: absolute;
+  top: 30%;
+  left: calc(50% - 325px);
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px;
+  max-width: 750px;
+  width: 100vh;
+  background-color: var(#{--components-background-default});
+  box-shadow: $box-shadow;
+  border-radius: $border-radius;
+  background: var(#{--components-background-default});
+  height: 360px;
+  .this__day_info_items {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin: 0;
+    height: 100%;
+    justify-content: space-between;
+  }
+}
+
+
+
+.day {
+  .day__temp {
+    font-weight: 500;
+    font-size: 60px;
+    color: $primary-color;
+    margin-bottom: 12px;
+  }
+  .day__name {
+    font-size: 25px;
+    line-height: 30px;
+    color: var(#{--text-color-default});
+    margin-bottom: 12px;
+  }
+  .img {
+    svg {
+      width: 53px;
+      height: 53px;
+    }
+    margin-bottom: 12px;
+  }
+
+  .day__time,
+  .day__city {
+    font-size: 15px;
+    color: $base-color;
+  }
+}
+
+
+
+

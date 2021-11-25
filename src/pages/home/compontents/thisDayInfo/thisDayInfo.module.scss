@@ -1,0 +1,57 @@
+.this__day_info {
+  padding: 20px;
+  max-width: 750;
+  box-shadow: 2px 5px 25px -3px rgba(180, 180, 180, 0.25);
+  width: 100%;
+  position: relative;
+  background-color: var(#{--components-background-default});
+  border-radius: 20px;
+  margin-left: 50px;
+
+  .this__day_info_items {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin: 0;
+    height: 100%;
+    justify-content: space-between;
+    
+    
+  }
+}
+.item {
+  align-items: center;
+  margin-left: 0;
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  position: relative;
+  
+
+  .item__icon {
+    height: 30px;
+    width: 30px;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 4px 10px -1px rgba(71, 147, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+  }
+  .item__key {
+    color: #939cb0;
+    margin-right: 20px;
+  }
+  .item__value {
+      color: var(#{--text-color-default})
+  }
+}
+
+.this__day_info_cloud{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
