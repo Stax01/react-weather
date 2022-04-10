@@ -1,16 +1,16 @@
 import s from './thisDayInfo.module.scss'
 import { ThisDayInfoItem } from './ThisDayInfoItem'
-import cloud from './../../../../assets/images/cloud.png'
-import { Data } from '../../../../store/types'
-import { dirToStr } from '../../../../Utils/WindDeg';
+import cloud from './../../assets/images/cloud.png'
+import { Data } from '../../store/types'
+import { dirToStr } from '../../Utils/WindDeg';
 
-interface Props {
+interface ThisDayInfoProps {
     data: Data
 }
 
-const ThisDayInfo = ({ data }: Props) => {
+const ThisDayInfo: React.FC<ThisDayInfoProps> = ({ data }) => {
     const weather = data.weather[0].description
-   const items = [
+    const items = [
         {
             icon_id: 'temp',
             name: 'Температура',
@@ -49,7 +49,6 @@ const ThisDayInfo = ({ data }: Props) => {
         </div>
     )
 }
-
 
 export default ThisDayInfo
 

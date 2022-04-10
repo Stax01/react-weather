@@ -1,3 +1,5 @@
+@import "./../../styles/variables.scss";
+
 .this__day_info {
   padding: 20px;
   max-width: 750;
@@ -37,9 +39,16 @@
     border-radius: 50%;
     box-shadow: 1px 4px 10px -1px rgba(71, 147, 255, 0.2);
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     margin-right: 20px;
+    svg{
+    height: 22px;
+    width: 22px;
+ 
+
+     
+    }
   }
   .item__key {
     color: #939cb0;

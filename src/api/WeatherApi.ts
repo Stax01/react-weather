@@ -1,21 +1,24 @@
 import { AxiosResponse } from "axios"
-import api from "../axios"
+import api from "."
 import {  Data } from "../store/types"
 
-interface ICoord {
+export type Coord = {
     lat: number;
     lon: number
 }
 
-export const WeatherService = {
+export const WeatherApi = {
     async getCurrentWeather(city: string):Promise<AxiosResponse<Data>> {
         const data = await api.get<Data>(`/weather?q=${city},RU`)
-        
         return data
     },
-    async getCurrentWeatherSevensDays(payload:ICoord ) {
+    async getCurrentWeatherSevensDays(payload:Coord ) {
         const  data  = await api.get(`onecall?lat=${payload.lat}&lon=${payload.lon}&exclude={current,minutely,alerts}`)
-        console.log(data)
+        return data
+
+    },
+    async getCurrentWeathersDays(payload:Coord ) {
+        const  data  = await api.get(`onecall?lat=${payload.lat}&lon=${payload.lon}&exclude={current,minutely,alerts}`)
         return data
 
     }

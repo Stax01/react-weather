@@ -1,10 +1,13 @@
+import { Coord } from "../api/WeatherApi";
+
+
 export type Data = {
     main: {
         temp: number;
         feels_like: number;
         pressure: number;
-    }
-    coord: any
+    };
+    coord: Coord;
     weather: Weather;
     wind: {
         speed: number;
@@ -37,10 +40,10 @@ export type WeatherDaily = {
     weather: Weather;
     wind_speed: number;
     pressure: number
-    temp:{
+    temp: {
         day: number;
         night: number
     }
-    wind_deg:number
+    wind_deg: number
 }
 

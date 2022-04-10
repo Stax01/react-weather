@@ -1,34 +1,28 @@
-import { WeatherService } from "../../services/WeatherService";
-import { currentWeatherSevenSlice } from "../slices/currentWeatherSevenSlice";
-import { currentWeatherSlice } from "../slices/currentWeatherSlice";
-import { AppDispatch } from "../store";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { Coord, WeatherApi } from "../../api/WeatherApi";
 
-export const fetchCurrentWeather = (payload: string) => async (dispatch: AppDispatch) => {
-    try {
-        dispatch(currentWeatherSlice.actions.fetchCurrentWeather())
-        const res = await WeatherService.getCurrentWeather(payload)
-        if (res.status === 200) {
-            dispatch(currentWeatherSlice.actions.fetchCurrentWeatherSuccess(res))
-        } else {
-            dispatch(currentWeatherSlice.actions.fetchCurrentWeatherError(res))
-        }
-    } catch (error) {
-        console.log(error)
+
+export const fetchCurrentWeather = createAsyncThunk(
+    'current_weather/fetching',
+    async(payload: string) => {
+        try {
+            const res = await WeatherApi.getCurrentWeather(payload)
+           return res   
+        } catch (error) {
+            console.log(error)
+        } 
     }
-}
+)
+export const fetchCurrentWeatherSeven = createAsyncThunk(
+    'current_weather_seven_days/fetching',
+    async(payload:Coord)=> {
+        try {
+            const data = await WeatherApi.getCurrentWeatherSevensDays(payload)
 
-
-export const fetchCurrentWeatherSeven = (paylod: { lat: number, lon: number }) => async (dispatch: AppDispatch) => {
-    try {
-        dispatch(currentWeatherSevenSlice.actions.fetchCurrentWeatherSeven)
-        const res = await WeatherService.getCurrentWeatherSevensDays(paylod)
-        if (res.status === 200) {
-            dispatch(currentWeatherSevenSlice.actions.fetchCurrentWeatherSevenSuccess(res))
-            console.log(res)
-        } else {
-            dispatch(currentWeatherSevenSlice.actions.fetchCurrentWeatherSevenError(res))
+            return data
+        } catch (error) {
+            console.log(error)
         }
-    } catch (error) {
-        console.log(error)
     }
-}
+)
+

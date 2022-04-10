@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { AxiosResponse } from "axios"
-
+import { Coord } from "../../api/WeatherApi";
+import { fetchCurrentWeather } from "../thunk/fetchCurrentWeather";
 import { Data } from "../types"
 
 
@@ -8,7 +8,9 @@ type CurrentWeather = {
     weather?: Data;
     isLoading: boolean;
     response: Response;
-    city: string
+    city: string;
+    error: string
+    coord?: Coord
 }
 
 type Response = {
@@ -16,51 +18,47 @@ type Response = {
     message: string
 }
 
-const initialState:CurrentWeather = {
-    city: '' || 'Санкт-Петербург',
-    weather:undefined,
+const initialState: CurrentWeather = {
+    city: localStorage.getItem('city') || '',
+    weather: undefined,
     isLoading: false,
     response: {
         status: 0,
         message: ''
-    }
+    },
+    coord: undefined,
+    error: ''
 }
 
 export const currentWeatherSlice = createSlice({
     name: 'current_weather',
     initialState,
     reducers: {
-        fetchCurrentWeather(state) {
-            state.isLoading = true
-        },
         addCurrentCity(
             state,
             action
         ) {
             state.city = action.payload
         },
-        fetchCurrentWeatherSuccess(
-            state,
-            action: PayloadAction<AxiosResponse<Data>>
-        ) {
+    },
+    extraReducers: {
+        [fetchCurrentWeather.fulfilled.type]: (state, action) => {
             state.isLoading = false;
+            state.error = ''
             state.weather = action.payload.data;
-            state.response = {
-                status: action.payload.status,
-                message: action.payload.statusText
-            }
+
         },
-        fetchCurrentWeatherError(
-            state,
-            action: PayloadAction<AxiosResponse<Data>>
-        ) {
+        [fetchCurrentWeather.pending.type]: (state) => {
+            state.isLoading = true;
+        },
+        [fetchCurrentWeather.rejected.type]: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
-            state.response = {
-                status: action.payload.status,
-                message: action.payload.statusText
-            }
+            state.error = action.payload
         },
+
     }
 })
 
 export default currentWeatherSlice.reducer;
+
+

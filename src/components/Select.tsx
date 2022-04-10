@@ -2,7 +2,7 @@ import React, { FocusEventHandler } from 'react'
 import { ActionMeta, OnChangeValue, StylesConfig, default as ReactSelect } from 'react-select'
 
 export type ISelectOption = {
-    value: string,
+    value: number,
     label: string
 }
 export type isMulti = false
@@ -21,6 +21,7 @@ export interface ISelectProps {
 export const Select: React.FC<ISelectProps> = ({
     onBlur,
     onFocus,
+    
     options,
     styles,
     value,
@@ -28,6 +29,7 @@ export const Select: React.FC<ISelectProps> = ({
 }) => {
     return (
         <ReactSelect
+        className='react-select__control'
             styles={styles}
             value={value}
             onChange={onChange}
@@ -36,6 +38,5 @@ export const Select: React.FC<ISelectProps> = ({
             onFocus={onFocus}
         />
     )
-
 }
 

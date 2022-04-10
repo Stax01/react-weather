@@ -1,43 +1,36 @@
 import React from 'react'
 import { GlobalSvgSelector } from '../../assets/icon/global/globalSvgSelector'
+import { cityDB } from '../../cityDB'
 import { Theme } from '../../context/ThemeContext'
 import { useCustomDispatch } from '../../hooks/store'
 import { currentWeatherSlice } from '../../store/slices/currentWeatherSlice'
-import { useTheme } from './../../hooks/useTheme'
-import Select, { ISelectOption } from './components'
-import s from './header.module.scss'
-
+import { useCity } from '../../Utils/useCity'
+import { useTheme } from '../../hooks/useTheme'
+import Select, { ISelectOption } from '..'
+import styles from './header.module.scss'
 
 
 export const Header = () => {
-
-    const options: ISelectOption[] = [
-        { value: '1', label: 'Санкт-Петербург' },
-        { value: '2', label: 'Москва' },
-        { value: '3', label: 'Уфа' },
-        { value: '4', label: 'Ростов-на-дону' },
-        { value: '5', label: 'Тверь' },
-    ]
-
     const theme = useTheme()
     const dispatch = useCustomDispatch()
+    const city = useCity(cityDB)
 
     const [isSelectedOption, setIsSelectedOption] = React.useState(false)
-    const [selectedOption, setSelectedOption] = React.useState<ISelectOption>(options[0])
-
+    const [selectedOption, setSelectedOption] = React.useState<ISelectOption[]>(localStorage.getItem('city') || city[0])
     const customStyles = {
+
         control: (styles: any) => ({
             ...styles,
             backgroundColor: theme.theme === Theme.DARK ? '#4F4F4F' : 'rgba(71, 147, 255, 0.2)',
-            width: '194px',
+            width: '230px',
             height: '37px',
             borderRadius: '10px',
             cursor: "pointer",
-            
+            color: '#fff'
+
         }),
         singleValue: (styles: any) => ({
             ...styles,
-            
             color: theme.theme === Theme.DARK ? "#fff" : '#000'
         })
     }
@@ -52,34 +45,31 @@ export const Header = () => {
     const handleBlur = () => {
         setIsSelectedOption(false)
     }
-    console.log(isSelectedOption)
 
     const handleChange = (selectedOption: any) => {
         setSelectedOption(selectedOption)
-        const data = Object.values(selectedOption)[1]
+        const data: any = Object.values(selectedOption)[0]
+        localStorage.setItem('city', data)
         dispatch(currentWeatherSlice.actions.addCurrentCity(data))
     };
 
-
-
-
     return (
-        <div className={s.header}>
-            <div className={s.wrapper}>
-                <div className={s.logo}>
+        <div className={styles.header}>
+            <div className={styles.wrapper}>
+                <div className={styles.logo}>
                     <GlobalSvgSelector id='header-logo' />
                 </div>
-                <div className={s.title}>React weather</div>
+                <div className={styles.title}>React weather</div>
             </div>
-            <div className={s.wrapper}>
-                <div className={s.changeTheme} onClick={changeTheme}>
+            <div className={styles.wrapper}>
+                <div className={styles.changeTheme} onClick={changeTheme}>
                     <GlobalSvgSelector id='change-theme' />
                 </div>
                 <Select
                     styles={customStyles}
                     value={selectedOption}
                     onChange={handleChange}
-                    options={options}
+                    options={city}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                 />

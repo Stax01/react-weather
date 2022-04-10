@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AxiosResponse } from "axios";
+
+import { fetchCurrentWeather, fetchCurrentWeatherSeven } from "../thunk/fetchCurrentWeather";
 import { WeatherDaily, WeatherSevenDays } from "../types";
 
 export interface WeatherSevenState {
@@ -28,31 +29,20 @@ const initialState: WeatherSevenState = {
 export const currentWeatherSevenSlice = createSlice({
     name: 'current_weather_seven_days',
     initialState,
-    reducers: {
-        fetchCurrentWeatherSeven(state) {
-            state.isLoading = true
-        },
-        fetchCurrentWeatherSevenSuccess(
-            state,
-            action: PayloadAction<AxiosResponse<WeatherSevenDays>>
-        ) {
+    reducers: {},
+    extraReducers: {
+        [fetchCurrentWeatherSeven.fulfilled.type]: (state, action) => {
             state.isLoading = false;
             state.data = action.payload.data;
-            state.response = {
-                status: action.payload.status,
-                message: action.payload.statusText
-            }
         },
-        fetchCurrentWeatherSevenError(
-            state,
-            action: PayloadAction<AxiosResponse>
-        ) {
+        [fetchCurrentWeather.pending.type]: (state) => {
+            state.isLoading = true;
+        },
+        [fetchCurrentWeather.rejected.type]: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
-            state.response = {
-                status: action.payload.status,
-                message: action.payload.statusText
-            }
-        }
+            
+        },
+
     }
 })
 
