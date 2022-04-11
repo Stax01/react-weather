@@ -19,7 +19,7 @@ type Response = {
 }
 
 const initialState: CurrentWeather = {
-    city: localStorage.getItem('city') || '',
+    city: localStorage.getItem('city') || 'Москва',
     weather: undefined,
     isLoading: false,
     response: {
